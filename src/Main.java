@@ -1,283 +1,590 @@
-import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.SortedMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+/*1. Класс "Человек"
+  Создайте класс Person с полями name, age, gender. Реализуйте методы для вывода информации о человеке и увеличения его возраста. Добавьте метод для изменения имени.
+*/
+class Person{
+    String name;
+    int age;
+    String gender;
+
+    Person(String name, int age, String gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    void display() {
+        System.out.printf("Имя = %s , Возраст = %d ,Пол = %s", name, age, gender);
+    }
+
+    void upAge(int newAge) {
+        age = age + newAge;
+    }
+
+    void changeName(String newName) {
+        name = newName;
+    }
+}
+/* 2. Наследование: Класс "Работник" и "Менеджер"
+ Создайте класс Worker, который наследуется от класса Person, и добавьте поле salary. Создайте класс Manager, который наследует от Worker и добавляет поле для подчиненных сотрудников.
+*/
+class Worker extends Person{
+    double salary;
+    Worker(String name, int age, String gender,double salary) {
+        super(name, age, gender);
+        this.salary=salary;
+    }
+
+}
+class Manager extends Worker{
+    Person[] employee;
+    Manager(String name, int age, String gender,double salary,Person[] employee) {
+        super(name, age, gender,salary);
+        this.employee=employee;
+    }
+}
+/* 3. Полиморфизм: Животные
+ Создайте интерфейс Animal с методом makeSound(). Реализуйте классы Dog, Cat, и Cow, которые реализуют этот интерфейс. Продемонстрируйте полиморфизм на примере массива животных.
+*/
+interface Animal {
+    void makeSound();
+}
+
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("af af");
+    }
+}
+
+class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("myu myu");
+    }
+}
+
+class Cow implements Animal {
+    public void makeSound() {
+        System.out.println("mu mu");
+    }
+}
+/*4. Абстрактный класс "Транспорт"
+Создайте абстрактный класс Transport с абстрактным методом move(). Реализуйте классы Car и Bike, которые наследуются от Transport и реализуют метод move().
+*/
+abstract class  Transport{
+    abstract void move();
+}
+class Car extends Transport {
+    public void move() {
+        System.out.println("vrum vrum");
+    }
+
+}
+class Bike extends Transport {
+    public void move() {
+        System.out.println("rum rum");
+    }}
+
+/*5. Класс "Книга" и "Библиотека"
+Создайте класс Book с полями title, author, и year. Создайте класс Library, который содержит коллекцию книг и методы для добавления книг, поиска по автору и году публикации.
+*/
+class Book{
+    String title;
+    String author;
+    int year;
+    Book(String title,String author,int year){
+        this.title=title;
+        this.author=author;
+        this.year=year;
+    }
+
+}
+class Library {
+    ArrayList<Book> books = new ArrayList<>();
+
+    public void addBook(Book bookin) {
+        books.add(bookin);
+    }
+
+    public Book searchAuthor(String sAuthor) {
+        for (Book i : books) {
+            if (i.author == sAuthor) {
+                return i;
+            }
+
+        }
+        return null;
+    }
+
+    public Book searchYear(int sYear) {
+        for (Book i : books) {
+            if (i.year == sYear) {
+                return i;
+            }
+
+        }
+        return null;
+    }
+}
+
+/*6. Инкапсуляция: Банк
+Создайте класс BankAccount с полями accountNumber, balance, и методами для пополнения и снятия средств. Обеспечьте инкапсуляцию для безопасности данных счета.
+*/
+class BankAccount{
+    private int accountNumber;
+    private double balance;
+    BankAccount (int accountNumber,double balance){
+        this.accountNumber=accountNumber;
+        this.balance=balance;
+    }
+    public void replenishment(double push){
+        this.balance=this.balance+push;
+    }
+    public void withdrawal(double unPush){
+        this.balance=this.balance+unPush;
+    }
+}
+/*7. Счетчик объектов
+Создайте класс Counter, который хранит количество созданных объектов данного класса. Реализуйте статическое поле для учета количества объектов и метод для его увеличения при каждом создании объекта.
+*/
+class  Counter{
+    static int count=0;
+    Counter(){
+        count++;
+    }
+}
+/*8. Площадь фигур
+Создайте абстрактный класс Shape с абстрактным методом getArea(). Реализуйте классы Circle и Rectangle, которые наследуют от Shape и вычисляют площадь круга и прямоугольника соответственно.
+*/
+abstract class Shape{
+    abstract double getArea();
+}
+class Circle extends Shape{
+    int r;
+    Circle(int r){
+        this.r=r;
+    }
+
+    double getArea() {
+        return Math.PI * 2 * r;
+    }
+}
+
+class Rectangle extends Shape {
+    int a;
+    int b;
+
+    Rectangle(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    double getArea() {
+        return a * b;
+    }
+}
+
+/* 9. Наследование: Животные и их движения
+ Создайте класс Animal с методом move().
+ Реализуйте классы Fish, Bird и Dog, которые наследуют Animal и переопределяют метод move() (рыба плавает, птица летает, собака бегает).
+*/
+class Animal_task9 {
+    void move(){
+        System.out.println("right");
+    }
+}
+class Fish extends Animal_task9{
+    @Override void move(){
+        System.out.println("down");
+    }
+}
+class Bird extends Animal_task9{
+    @Override void move(){
+        System.out.println("up");
+    }
+}
+class Dog_task9 extends Animal_task9{
+    @Override void move(){
+        System.out.println("left");
+    }
+}
 
 
-public class Main {
+/*10. Работа с коллекциями: Университет
+Создайте класс Student с полями name, group, grade. Создайте класс University, который содержит список студентов и методы для добавления студентов, сортировки по имени и фильтрации по успеваемости.
+*/class  Student{
+    String name;
+    String group;
+    int grade;
+}
+class University{
+    ArrayList<Student> students=new ArrayList<>();
+    void addStudent(Student newStudent){
+        students.add(newStudent);
+    }
+    Comparator<Student> compareByName = new Comparator<Student>() {
+
+        public int compare(Student o1, Student o2) {
+
+            return o1.name.compareTo(o2.name);
+        }
+    };
+    void sortStudents(){
+        Collections.sort(students,compareByName);
+    }
+    ArrayList<Student> filterStudents(int score){
+        ArrayList<Student> students=new ArrayList<>();
+        for(Student i:this.students){
+            if (i.grade==score){
+                students.add(i);
+            }
+        }
+        return students;
+    }
+}
+/* 11. Класс "Магазин"
+ Реализуйте класс Product с полями name, price, и quantity. Создайте класс Store, который содержит список продуктов и методы для добавления, удаления и поиска товаров по имени.
+*/
+class Product{
+    String name;
+    double price;
+    int quantity;
+}
+class Store{
+    ArrayList<Product> products=new ArrayList<>();
+    void addProduct(Product newProduct){
+        products.add(newProduct);
+    }
+    void deleteProduct(Product delProduct){
+        products.remove(delProduct);
+    }
+    Product nameProduct(String newProduct){
+        for(Product i:products){
+            if (i.name==newProduct){
+                return i;
+            }
+        }
+        return null;
+    }
+}
+/*12. Интерфейс "Платежная система"
+Создайте интерфейс PaymentSystem с методами pay() и refund(). Реализуйте классы CreditCard и PayPal, которые реализуют этот интерфейс.
+*/
+interface PaymentSystem{
+    void pay();
+    void refund();
+}
+class CreditCard implements PaymentSystem{
+    public void pay(){
+        System.out.println("pay");
+    }
+    public void refund(){
+        System.out.println("refund");
+    }
+}
+class PayPal implements PaymentSystem{
+    public void pay(){
+        System.out.println("pay");
+    }
+    public void refund(){
+        System.out.println("refund");
+    }
+}
+/*13. Генерация уникальных идентификаторов
+Создайте класс UniqueID, который генерирует уникальные идентификаторы для объектов каждого созданного класса. Реализуйте этот функционал через статическое поле и метод.
+*/class UniqueID {
+    static int count = 0;
+
+    UniqueID() {
+        count++;
+    }
+}
+/*14. Класс "Точка" и "Прямоугольник"
+Создайте класс Point с координатами x и y. Реализуйте класс Rectangle, который содержит две точки (левая верхняя и правая нижняя). Реализуйте метод для вычисления площади прямоугольника.
+*/
+class Point{
+    int x;
+    int y;
+    Point(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+}
+class Rectangle_task14{
+    Point x;
+    Point y;
+    Rectangle_task14(int x,int y,int x1,int y1){
+        this.x=new Point(x,y);
+        this.y=new Point(x1,y1);
+
+    }
+    double getS(){
+        return (y.x-x.x)*(x.y-y.y) ;
+    }
+}
+/*15. Комплексные числа
+Создайте класс ComplexNumber с полями для действительной и мнимой частей. Реализуйте методы для сложения, вычитания, умножения и деления комплексных чисел.
+*/
+class ComplexNumber {
+    double deist;
+    double mnim;
+
+    ComplexNumber(double deist, double mnim) {
+        this.deist = deist;
+        this.mnim = mnim;
+    }
+
+    ComplexNumber sum(ComplexNumber a) {
+        return new ComplexNumber(deist + a.deist, mnim + a.mnim);
+    }
+
+    ComplexNumber vich(ComplexNumber a) {
+        return new ComplexNumber(deist - a.deist, mnim - a.mnim);
+    }
+
+    ComplexNumber umnozh(ComplexNumber a) {
+        return new ComplexNumber(deist * a.deist - mnim * a.mnim, deist * a.mnim + mnim * a.deist);
+    }
+
+    ComplexNumber del(ComplexNumber a) {
+        ComplexNumber b=a;
+        b.mnim=a.mnim*(-1);
+        return new ComplexNumber((deist * b.deist - mnim * b.mnim) / (Math.pow(a.deist, 2) + Math.pow(a.mnim, 2)), deist * b.mnim + mnim * b.deist);
+    }
+}
+/* 16. Перегрузка операторов: Матрица
+ Создайте класс Matrix, представляющий двумерную матрицу. Реализуйте методы для сложения и умножения матриц. Продемонстрируйте перегрузку методов.
+*/
+class Matris{
+    int[][] plus(int[][] b) {
+        return null;
+    }
+
+    int[][] umnozh(int[][] b) {
+        return null;
+    }
+}
+class Matrix extends Matris{
+    int[][] a=new int[3][3];
+    @Override int[][] plus(int[][] b){
+        int[][] c=new int[3][3];
+        for (int i = 0; i <3 ; i++) {
+            for (int j = 0; j <3 ; j++) {
+                c[i][j]=a[i][j]+b[i][j];
+            }
+        }
+        return c;
+    }
+    @Override int[][] umnozh(int[][] b){
+        int[][] c=new int[3][3];
+        for (int i = 0; i <3 ; i++) {
+            for (int j = 0; j <3 ; j++) {
+
+                int b1=a[i][j];
+                int v=0;
+                for (int k = 0; k <3 ; k++) {
+                    v+=b1*b[k][j];
+                }
+                c[i][j]=v;
+
+            }
+        }
+        return c;
+    }
+}
+/*17. Создание игры с использованием ООП
+Реализуйте классы для небольшой текстовой игры, такие как Player, Enemy, Weapon, с полями и методами, описывающими их поведение.
+*/
+abstract class Character {
+    int hp;
+    int damage;
+
+    Character(int hp, int damage) {
+        this.hp = hp;
+        this.damage = damage;
+    }
+    abstract void live();
+}
+
+class Player extends Character {
+    Weapon weapon;
+
+    Player(int hp, int damage, Weapon weapon) {
+        super(hp, damage);
+        this.weapon = weapon;
+
+    }
+    void live(){
+        System.out.printf("Убивает врагов, hp: % damage: %d",hp,damage+weapon.power);
+    }
+}
+class Enemy extends Character {
+    Enemy(int hp, int damage) {
+        super(hp, damage);
+    }
+    void live(){
+        System.out.printf("Злой враг, hp: % damage: %d",hp,damage);
+    }
+}
+class Weapon{
+    int power;
+    Weapon(int power){
+        this.power=power;
+    }
+}
+/* 18. Автоматизированная система заказов
+ Создайте классы Order, Customer, и Product. Реализуйте систему, где можно добавлять заказы, отображать общую стоимость заказа и просматривать историю заказов.
+*/
+class Product_task18 {
+    int cost;
+    String name;
+
+    Product_task18(String name, int cost) {
+        this.cost = cost;
+        this.name = name;
+    }
+}
+class Order{
+    ArrayList<Product_task18> products=new ArrayList<>();
+    void addProduct(Product_task18 a){
+        products.add(a);
+    }
+    int allSum(){
+        int sum=0;
+        for(Product_task18 i:products){
+            sum+=i.cost;
+        }
+        return sum;
+    }
+}
+class Customer {
+    String name;
+    ArrayList<Order> orders = new ArrayList<>();
+
+    void addOrder(Order a) {
+        orders.add(a);
+    }
+
+    void display() {
+        int o=1;
+        for (Order i : orders) {
+            System.out.println("Заказ "+o);
+            for(Product_task18 u:i.products){
+                System.out.println(u.name);
+            }
+            o++;
+        }
+    }
+}
+
+/*19. Наследование: Электроника
+Создайте класс Device с полем brand и методами turnOn() и turnOff(). Реализуйте классы Smartphone и Laptop, которые наследуют от Device и добавляют уникальные методы, например, takePhoto() для смартфона.
+*/
+class Device{
+    String brand;
+    void turnOn(){
+        System.out.println("turn on");
+    }
+    void turnOff(){
+        System.out.println("turn off");
+    }
+    class Smartphone extends Device{
+        void takePhoto(){
+            System.out.println("click");
+        }
+    }
+    class Laptop extends  Device{
+        void internet(){
+            System.out.println("connected");
+        }
+    }
+}
+/*20. Игра "Крестики-нолики"
+Разработайте классы для игры "Крестики-нолики". Создайте класс Game, который управляет логикой игры, и классы Player, описывающие поведение игроков.
+*/
+class ChessPlayer{
+    static int count=0;
+    int mark;
+    String name;
+    ChessPlayer(String name)    {
+        this.name=name;
+        count++;
+        if (count==1){
+            mark=1;
+        }
+        else{
+            mark=-1;
+        }
+    }
+}
+class Game{
+    int[][] dashboard=new int[3][3];
+    void checkHod(int x,int y,ChessPlayer player){
+        if(dashboard[x][y]!=0){
+            System.out.println("Неправильный ход");
+        }
+        else {
+            dashboard[x][y]=player.mark;
+        }
+    }
+    void checkWin(){
+        int sum1=0;
+        int sum2=0;
+
+        for (int i = 0; i < 3; i++) {
+            int sum=0;
+            for (int j = 0; j <3; j++) {
+                sum+=dashboard[i][j];
+            }
+            if (sum == 3 | sum == -3) {
+                System.out.println("win player mark "+dashboard[i][i]);
+                break;
+            }
+            sum1+=dashboard[i][i];
+
+        }
+        for (int i = 0; i < 3; i++) {
+            int sum=0;
+            for (int j = 0; j <3; j++) {
+                sum+=dashboard[j][i];
+            }
+            if (sum == 3 | sum == -3) {
+                System.out.println("win player mark "+dashboard[i][i]);
+                break;
+            }
+        }
+        int p=2;
+        for (int i = 2; i >0; i--) {
+
+            sum2+=dashboard[i-p][i];
+            p=i==2?1:0;
+        }
+        if (sum1 == 3 | sum1 == -3) {
+            System.out.println("win player mark "+dashboard[1][1]);
+        }
+        if (sum2 == 3 | sum2 == -3) {
+            System.out.println("win player mark "+dashboard[1][1]);
+        }
+
+    }
+}
+
+
+
+
+
+
+
+class Main{
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-
-//        Задача 1: Четное или нечетное число
-//        Условие:
-//        Пользователь вводит целое число. Программа должна вывести, является ли это число четным или нечетным.
-//        System.out.println(in.nextInt()%2==0?"Четное":"Нечетное");
-
-//        Задача 2: Минимальное из трех чисел
-//        Условие:
-//        Пользователь вводит три целых числа. Программа должна найти и вывести минимальное из них.
-//        int[] mas=new int[3];
-//        for(int i=0;i<3;i++){
-//            mas[i]=in.nextInt();
-//        }
-//        System.out.println("Минимальное число - "+Arrays.stream(mas).min().getAsInt());
-
-//        Задача 3: Таблица умножения
-//        Условие:
-//        Напишите программу, которая выводит таблицу умножения на 5 (от 1 до 10).
-//for (int y=1;y<=10;y++){
-//    System.out.println(y*5);
-//}
-
-//        Задача 4: Сумма чисел от 1 до N
-//        Условие:
-//        Пользователь вводит целое число N. Программа должна вывести сумму всех чисел от 1 до N.
-
-//        int sum=0;
-//        int max=in.nextInt();
-//        for (int i = 1; i <= max; i++) {
-//            sum=sum+i;
-//        }
-//        System.out.println(sum);
-
-//        Задача 5: Число Фибоначчи
-//        Условие:
-//        Пользователь вводит целое число N. Программа должна вывести первые N чисел Фибоначчи.
-
-//       int one=0;
-//       int two=1;
-//       int max=in.nextInt();
-//       for (int i = 0; i <max-2 ; i++) {
-//            one=two+one;
-//            one=two+one;
-//            two=one-two;
-//            one=one-two;
-//
-//        }
-//        System.out.println(max==1?one:two);
-
-//                Задача 6: Проверка простого числа
-//        Условие:
-//        Пользователь вводит целое число. Программа должна проверить, является ли это число простым (делится только на 1 и само на себя).
-//
-//        int num=in.nextInt();
-//        String error="Число является простым";
-//        for (int i = 2; i <=num/2 ; i++) {
-//            if (num%i==0) {
-//                error="Число не является простым";
-//                break;
-//            }
-//        }
-//        System.out.println(error);
-//
-//        Задача 7: Обратный порядок чисел
-//        Условие:
-//        Пользователь вводит целое число N. Программа должна вывести числа от N до 1 в обратном порядке.
-//
-//        int sum=0;
-//      int max=in.nextInt();
-//       for (int i = max; i >= 1; i--) {
-//           System.out.println(i);
-//       }
-
-//
-//                Задача 8: Сумма четных чисел
-//        Условие:
-//        Пользователь вводит два целых числа A и B. Программа должна найти сумму всех четных чисел в диапазоне от A до B (включительно).
-//        int sum=0;
-//        int start=in.nextInt();
-//                int finish=in.nextInt();
-//        for (int i = start; i <=finish ; i++) {
-//            if (i%2==0) {
-//                sum+=i;
-//            }
-//        }
-//        System.out.println(sum);
-
-//                Задача 9: Реверс строки
-//        Условие:
-//        Пользователь вводит строку. Программа должна вывести эту строку в обратном порядке.
-
-//String startLength=in.nextLine();
-//        for (int i = startLength.length()-1; i >=0 ; i--) {
-//
-//            System.out.print(startLength.charAt(i));
-//        }
-
-//        Задача 10: Количество цифр в числе
-//        Условие:
-//        Пользователь вводит целое число. Программа должна вывести количество цифр в этом числе.
-
-//        int quanty=1;
-//        int num=in.nextInt();
-//        while (num>=10){
-//            num=num/10;
-//            quanty++;
-//        }
-//        System.out.println(quanty);
-
-//        Задача 11: Факториал числа
-//        Условие:
-//        Пользователь вводит целое число N. Программа должна вычислить факториал этого числа (N!).
-
-//        int num=in.nextInt();
-//        int factorial=1;
-//        for (int i = 1; i <= num; i++) {
-//            factorial=factorial*i;
-//        }
-//        System.out.println(factorial);
-
-//        Задача 12: Сумма цифр числа
-//        Условие:
-//        Пользователь вводит целое число. Программа должна найти сумму всех цифр этого числа.
-//        int num=in.nextInt();
-//        int result=0;
-//        while(num>10){
-//            result+=num%10;
-//            num=num/10;
-//        }
-//result+=num;
-//        System.out.println(result);
-//
-
-//        Задача 13: Палиндром
-//        Условие:
-//        Пользователь вводит строку. Программа должна проверить, является ли эта строка палиндромом
-//        (читается одинаково слева направо и справа налево).
-//        String  test=in.nextLine();
-//        String answer="Строка палиндром";
-//        for (int i = 0; i <test.length()/2; i++) {
-//            if (test.charAt(i)!=test.charAt(test.length()-1-i)){
-//                answer="Строка не палиндром";
-//                break;
-//            }
-//        }
-//        System.out.println(answer);
-
-//        Задача 14: Найти максимальное число в массиве
-//        Условие:
-//        Пользователь вводит размер массива и элементы массива. Программа должна найти и вывести максимальное число в массиве.
-
-//    int heigth=in.nextInt();
-//    int max=0;
-//    int[] mas=new int[heigth];
-//        for (int i = 0; i < heigth; i++) {
-//            mas[i]=in.nextInt();
-//            if (i == 0) {
-//                max=mas[i];
-//            }
-//            if (max<mas[i]) {
-//                max=mas[i];
-//            }
-//
-//        }
-//        System.out.println(max);
-
-
-//                Задача 15: Сумма всех элементов массива
-//        Условие:
-//        Пользователь вводит размер массива и его элементы. Программа должна вычислить и вывести сумму всех элементов массива.
-//        int heigth=in.nextInt();
-//    int sum =0;
-//    int[] mas=new int[heigth];
-//        for (int i = 0; i < heigth; i++) {
-//            mas[i]=in.nextInt();
-//            sum+=mas[i];
-//        }
-//        System.out.println(sum);
-
-
-//                Задача 16: Количество положительных и отрицательных чисел
-//        Условие:
-//        Пользователь вводит размер массива и его элементы. Программа должна подсчитать и вывести количество положительных и отрицательных чисел в массиве.
-
-//        int heigth = in.nextInt();
-//        int plus = 0;
-//        int minus = 0;
-//        int[] mas = new int[heigth];
-//        for (int i = 0; i < heigth; i++) {
-//            mas[i] = in.nextInt();
-//            if (mas[i]>0) {
-//                plus++;
-//            }
-//            else{
-//                minus++;
-//            }
-//        }
-//        System.out.println("Положительных "+plus);
-//        System.out.println("Отрицательных "+minus);
-
-
-//        Задача 17: Простые числа в диапазоне
-//        Условие:
-//        Пользователь вводит два целых числа A и B. Программа должна вывести все простые числа в этом диапазоне (включительно).
-
-
-//        int start = in.nextInt();
-//        int finish = in.nextInt();
-//        boolean tip=true;
-//        for (int i = start; i <= finish; i++) {
-//
-//        for (int j = 2; j <=i/2 ; j++) {
-//            if (i%j==0) {
-//                tip=false;
-//                break;
-//            }
-//        }
-//            if ( tip) {
-//                System.out.print(i+"\t");
-//            }
-//            tip=true;
-//        }
-
-
-//                Задача 18: Подсчет гласных и согласных в строке
-//        Условие:
-//        Пользователь вводит строку. Программа должна подсчитать и вывести количество гласных и согласных букв в этой строке.
-
-//        String A="ауоиэыяюеё";
-//        int aword=0;
-//        int bword=0;
-//
-//        String strok=in.nextLine().toLowerCase();
-//        for (int i = 0; i <strok.length() ; i++) {
-//            if(A.contains(Character.toString(strok.charAt(i)))){
-//                aword++;
-//            }
-//            else {
-//                bword++;
-//            }
-//        }
-//        System.out.println("Количество гласных "+aword);
-//        System.out.println("Количество согласных "+bword);
-
-
-//                Задача 19: Перестановка слов в строке
-//        Условие:
-//        Пользователь вводит строку, состоящую из нескольких слов. Программа должна вывести слова в обратном порядке.
-//        String strok=in.nextLine().toLowerCase();
-//        String[] revStrok=strok.split(" ");
-//        for (int i = revStrok.length-1; i >=0 ; i--) {
-//            System.out.print(revStrok[i]+" ");
-//        }
-
-//                Задача 20: Число Армстронга
-//        Условие:
-//        Пользователь вводит целое число. Программа должна проверить, является ли это число числом Армстронга (сумма цифр в степени, равной количеству цифр, равна самому числу).
-//        int num = in.nextInt();
-//        int num1 = num;
-//        int pow = String.valueOf(num).length();
-//        double sum = 0;
-//        while (num > 10) {
-//            sum += Math.pow(num % 10, pow);
-//            num = num / 10;
-//        }
-//        sum += Math.pow(num, pow);
-//        if ((int) sum == num1) {
-//            System.out.println("Число Армстронга");
-//        } else {
-//            System.out.println("Не число Армстронга");
-//        }
-//
-//    }
-//}
+        Animal[] animals={new Dog(),new Cat(),new Cow()};
+        for(Animal o:animals){
+            o.makeSound();
+        }
+    }
+}
